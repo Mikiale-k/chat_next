@@ -1,7 +1,5 @@
 import { defineField, defineType } from "sanity";
 
-/* we got all this form gitAuth*/
-
 export const startup = defineType({
     name: "startup",
     title: "Startup",
@@ -9,10 +7,12 @@ export const startup = defineType({
     fields: [
         defineField({
             name: 'title',
+            title: 'Title',
             type: 'string',
         }),
         defineField({
             name: 'slug',
+            title: 'Slug',
             type: 'slug',
             options: {
                 source: 'title'
@@ -20,26 +20,31 @@ export const startup = defineType({
         }),
         defineField({
             name: 'author',
+            title: 'Author',
             type: 'reference',
-            to: { type: 'author' },
-        }), defineField({
+            to: [{ type: 'author' }],
+        }),
+        defineField({
             name: 'views',
+            title: 'Views',
             type: 'number',
-        }), defineField({
+        }),
+        defineField({
             name: 'description',
+            title: 'Description',
             type: 'text',
-        }), defineField({
+        }),
+        defineField({
             name: 'category',
+            title: 'Category',
             type: 'string',
             validation: (Rule) => Rule.min(1).max(20).required().error("Please enter a category"),
         }),
         defineField({
             name: 'image',
+            title: 'Image',
             type: 'url',
             validation: (Rule) => Rule.required(),
-        }), defineField({
-            name: 'pitch',
-            type: 'markdown',
         }),
     ],
 });

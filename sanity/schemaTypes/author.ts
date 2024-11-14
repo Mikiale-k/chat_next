@@ -1,11 +1,10 @@
 import { UserIcon } from "lucide-react";
 import { defineField,defineType } from "sanity";
 
-/* we got all this form gitAuth*/
 
 export const author = defineType({
-    name: "author",
-    title: "Aurhor",
+    name: "authorr",
+    title: "Authorr",
     type: "document",
     icon: UserIcon,
     fields: [
@@ -25,11 +24,7 @@ export const author = defineType({
         }),defineField({
             name: 'image',
             type: 'url',
-        }),defineField({
-            name: 'bio',
-            type: 'text',
-        }),
-    ], 
+        }),],
     preview: {
         select: {
             title: "name",
