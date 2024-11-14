@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { Author, Startup } from "@/sanity/types";
 
-export type StartupCardType = Omit<Startup, "author"> & {author?: Author};
+export type StartupCardType = Omit<Startup, "author"> & { author?: Author };
 
 const StartupCard = ({ post }: { post: StartupCardType }) => {
   const {
@@ -39,25 +39,26 @@ const StartupCard = ({ post }: { post: StartupCardType }) => {
           </Link>
         </div>
         <Link href={`/user/${author?._id}`}>
-            <Image src="https://placehold.co/600x400" alt="placeholder" 
-            width={48} height={48} className="rounded-full"/>
+          <Image
+            src="https://placehold.co/600x400"
+            alt="placeholder"
+            width={48}
+            height={48}
+            className="rounded-full"
+          />
         </Link>
       </div>
       <Link href={`/startup/${_id}`}>
-            <p className="startup-cardd_esc">
-              {description}
-            </p>
-            <img src={image} alt="palceholder" className="startup-card_img"/>
+        <p className="startup-cardd_esc">{description}</p>
+        <img src={image} alt="palceholder" className="startup-card_img" />
       </Link>
       <div className="flex-between gap-3 mt-5">
-          <Link href={`/?query=${category?.toLowerCase()}`}>
-            <p className="text-16-medium">{category}</p>
-            </Link>
-            <Button className="startup-card_btn" asChild>
-              <Link href={`/startup/${_id}`}>
-              Details
-              </Link>
-            </Button>
+        <Link href={`/?query=${category?.toLowerCase()}`}>
+          <p className="text-16-medium">{category}</p>
+        </Link>
+        <Button className="startup-card_btn" asChild>
+          <Link href={`/startup/${_id}`}>Details</Link>
+        </Button>
       </div>
     </li>
   );
