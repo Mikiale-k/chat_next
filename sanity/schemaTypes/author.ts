@@ -3,8 +3,8 @@ import { defineField, defineType } from "sanity";
 
 
 export const author = defineType({
-    name: "authorr",
-    title: "Authorr",
+    name: "author",
+    title: "Author",
     type: "document",
     icon: UserIcon,
     fields: [
@@ -24,7 +24,11 @@ export const author = defineType({
         }), defineField({
             name: 'image',
             type: 'url',
-        }),],
+        }),  defineField({
+            name: 'bio',
+            type: 'text',
+        }),
+    ],
     preview: {
         select: {
             title: "name",

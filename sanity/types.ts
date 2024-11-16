@@ -176,65 +176,6 @@ export type BlockContent = Array<{
   _key: string;
 }>;
 
-export type Startup = {
-  _id: string;
-  _type: "startup";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug?: Slug;
-  author?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "author";
-  };
-  views?: number;
-  description?: string;
-  category?: string;
-  image?: string;
-};
-
-export type Author = {
-  _id: string;
-  _type: "author";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  slug?: Slug;
-  image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  bio?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-};
-
 export type SanityImageCrop = {
   _type: "sanity.imageCrop";
   top?: number;
@@ -292,15 +233,36 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
+export type Startup = {
+  _id: string;
+  _type: "startup";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  author?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "author";
+  };
+  views?: number;
+  description?: string;
+  category?: string;
+  image?: string;
+  pitch?: string;
+};
+
 export type Slug = {
   _type: "slug";
   current?: string;
   source?: string;
 };
 
-export type Authorr = {
+export type Author = {
   _id: string;
-  _type: "authorr";
+  _type: "author";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -309,7 +271,8 @@ export type Authorr = {
   username?: string;
   email?: string;
   image?: string;
+  bio?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Post | Category | BlockContent | Startup | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug | Authorr;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Post | Category | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Startup | Slug | Author;
 export declare const internalGroqTypeReferenceTo: unique symbol;
