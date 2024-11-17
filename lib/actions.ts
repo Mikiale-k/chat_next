@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { auth } from "@/auth";
 import { parseServerActionResponse } from "./utils";
 import slugify from 'slugify'
@@ -13,7 +13,7 @@ export const createPitch = async (
 
     if (!session) return parseServerActionResponse({
         error: "Not signed in",
-        status: "ERROR"
+        status: "ERROR",
     });
 
     const { title, description, category, link } = Object.fromEntries(
@@ -40,6 +40,7 @@ export const createPitch = async (
         const result = await writeClient.create({ _type: "startup", ...startup })
 
         return parseServerActionResponse({
+            ...result,
             error: '',
             status: "SUCCESS",
         })
