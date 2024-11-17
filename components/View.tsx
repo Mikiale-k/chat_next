@@ -10,12 +10,11 @@ const View = async ({ id }: { id: string }) => {
     .fetch(START_VIEW_QUERY, { id });
 
   after(
-    async() =>
-      
-    await writeClient
-    .patch(id)
-    .set({ views: totalViews + 1 })
-    .commit()
+    async () =>
+      await writeClient
+        .patch(id)
+        .set({ views: totalViews + 1 })
+        .commit()
   );
   return (
     <div className="view-container">

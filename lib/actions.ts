@@ -19,7 +19,7 @@ export const createPitch = async (
     const { title, description, category, link } = Object.fromEntries(
         Array.from(form).filter(([key]) => key !== "pitch"));
 
-    const slug = slugify(title as string, {lower: true, strict: true})
+    const slug = slugify(title as string, { lower: true, strict: true })
 
     try {
         const startup = {
@@ -37,7 +37,7 @@ export const createPitch = async (
             },
             pitch,
         }
-        const result = await writeClient.create({_type: "startup", ...startup})
+        const result = await writeClient.create({ _type: "startup", ...startup })
 
         return parseServerActionResponse({
             error: '',
