@@ -1,15 +1,78 @@
 "use client";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import MDEditor from "@uiw/react-md-editor";
+import { Button } from "./ui/button";
+import { Send } from "lucide-react";
+import { formSchema } from "@/lib/validation";
+import { z } from "zod";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 const startupForms = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [pitch, setPitch] = useState("**HEllo world!!!***");
+  const [pitch, setPitch] = useState("");
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const handleFormSubmit = async (prevState: any, formData: FormData) => {
+    try {
+      const formValues = {
+        title: formData.get("title") as string,
+        description: formData.get("description") as string,
+        category: formData.get("category") as string,
+        link: formData.get("link") as string,
+        pitch,
+      };
+      await formSchema.parseAsync(formValues);
+      console.log(formValues);
+      // const result = await createIdea(prevState, formData, pitch);
+
+      // console.log(result);
+
+      //if(result.status == 'SUCCESS'){
+      //toast({
+      //title: "Success",
+      //description: "Your startup pitch has been crated successfully"
+      //});
+      //router.push(href: `/startup/${result.id}`);
+      //}
+      //return result;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldErorrs = error.flatten().fieldErrors;
+        setErrors(fieldErorrs as unknown as Record<string, string>);
+
+        toast({
+          title: "Error",
+          description: "Please cheack your input and try again",
+          variant: "destructive",
+        });
+
+        return { ...prevState, error: "Validation faild", status: "ERROR" };
+      }
+      toast({
+        title: "Error",
+        description: "An unexpected error has occurred",
+        variant: "destructive",
+      });
+
+      return {
+        ...prevState,
+        error: "An unexpected error has occurred",
+        status: "ERROR",
+      };
+    }
+  };
+
+  const [state, formAction, isPending] = useActionState(handleFormSubmit, {
+    error: "",
+    status: "INITIAL",
+  });
 
   return (
-    <form action={() => {}} className="startup-form">
+    <form action={formAction} className="startup-form">
       <div>
         <label htmlFor="title" className="startup-form_label">
           Title
@@ -76,17 +139,25 @@ const startupForms = () => {
           id="pitch"
           preview="edit"
           height={300}
-          style={{borderRadius: 20, overflow: "hidden"}}
+          style={{ borderRadius: 20, overflow: "hidden" }}
           textareaProps={{
-            placeholder: "Briefly describe your idea and what problem it solves"
+            placeholder:
+              "Briefly describe your idea and what problem it solves",
           }}
           previewOptions={{
-            disallowedElements: ["style"]
+            disallowedElements: ["style"],
           }}
         />
         {errors.pitch && <p className="startup-form_error">{errors.pitch}</p>}
       </div>
-      
+      <Button
+        type="submit"
+        className="startup-form_btn text-white"
+        disabled={isPending}
+      >
+        {isPending ? "Submitting..." : "Submit your pitch"}
+        <Send className="size-6 ml-2" />
+      </Button>
     </form>
   );
 };
